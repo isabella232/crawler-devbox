@@ -1,0 +1,4 @@
+#!/bin/bash
+
+source "/etc/yad/crawler/typo3/devbox.sh"
+/etc/yad/deploy/yad.sh
