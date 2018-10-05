@@ -3,8 +3,8 @@ vagrantfile:
     vm:
         provider:
             local:
-                box: puphpet/ubuntu1404-x64
-                box_url: puphpet/ubuntu1404-x64
+                box: bento/ubuntu-16.04
+                box_url: bento/ubuntu-16.04
                 box_version: '0'
                 chosen_virtualizer: virtualbox
                 virtualizers:
@@ -15,7 +15,7 @@ vagrantfile:
                     vmware:
                         numvcpus: 1
                     parallels:
-                        use_linked_clone: 0
+                        linked_clone: 0
                         check_guest_tools: 0
                         update_guest_tools: 0
                 machines:
@@ -33,12 +33,16 @@ vagrantfile:
         provision:
             puppet:
                 manifests_path: puphpet/puppet/manifests
-                module_path: puphpet/puppet/modules
+                module_path:
+                    - puphpet/puppet/modules
+                    - puphpet/puppet/manifests
                 options:
                     - '--verbose'
-                    - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
+                    - '--hiera_config /opt/puphpet/puppet/hiera.yaml'
         synced_folder:
             vflsf_lu00aoe8t6pj:
+                owner: www-data
+                group: www-data
                 source: ./
                 target: /var/www/
                 sync_type: default
@@ -58,8 +62,6 @@ vagrantfile:
                         - .vagrant/
                         - .git/
                     auto: 'true'
-                owner: www-data
-                group: www-data
         usable_port_range:
             start: 10200
             stop: 10500
@@ -107,15 +109,23 @@ locale:
 firewall:
     install: '1'
     rules: {  }
+resolv:
+    install: '1'
+    nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+    domainname: ''
+    searchpath: {  }
 cron:
     install: '1'
     jobs: {  }
 nginx:
     install: '0'
     settings:
+        version: present
         default_vhost: 1
-        proxy_buffer_size: 128k
         proxy_buffers: '4 256k'
+        proxy_buffer_size: 128k
         proxy_connect_timeout: 600s
         proxy_send_timeout: 600s
         proxy_read_timeout: 600s
@@ -128,47 +138,35 @@ nginx:
                 - www.awesome.dev
             www_root: /var/www/awesome
             listen_port: '80'
-            index_files:
-                - index.html
-                - index.htm
-                - index.php
             client_max_body_size: 1m
             ssl: '0'
-            ssl_cert: ''
-            ssl_key: ''
-            ssl_port: '443'
-            ssl_protocols: ''
-            ssl_ciphers: ''
-            rewrite_to_https: '1'
-            spdy: '1'
             locations:
                 nxvl_66v15s2zs8rn:
+                    www_root: ''
                     location: /
+                    autoindex: 'off'
+                    internal: 'false'
                     try_files:
                         - $uri
                         - $uri/
                         - /index.php$is_args$args
-                    fastcgi: ''
-                    fastcgi_index: ''
-                    fastcgi_split_path: ''
-                    proxy: ''
-                    proxy_redirect: ''
                 nxvl_0056ypfee8mm:
+                    www_root: ''
                     location: '~ \.php$'
+                    autoindex: 'off'
+                    internal: 'false'
                     try_files:
                         - $uri
                         - $uri/
                         - /index.php$is_args$args
+                    set:
+                        - '$path_info $fastcgi_path_info'
                     fastcgi: '127.0.0.1:9000'
                     fastcgi_index: index.php
                     fastcgi_split_path: '^(.+\.php)(/.*)$'
                     fast_cgi_params_extra:
                         - 'SCRIPT_FILENAME $request_filename'
                         - 'APP_ENV dev'
-                    set:
-                        - '$path_info $fastcgi_path_info'
-                    proxy: ''
-                    proxy_redirect: ''
     proxies: {  }
 apache:
     install: '1'
@@ -205,7 +203,9 @@ apache:
             ssl_cipher: ''
             directories:
                 avd_3nobwwg9tzqq:
+                    provider: directory
                     path: /var/www/crawler/devbox/web
+                    directoryindex: ''
                     options:
                         - Indexes
                         - FollowSymlinks
@@ -214,14 +214,6 @@ apache:
                         - All
                     require:
                         - 'all granted'
-                    custom_fragment: ''
-                    files_match:
-                        avdfm_wgyz5s80oyp2:
-                            path: \.php$
-                            sethandler: 'proxy:fcgi://127.0.0.1:9000'
-                            custom_fragment: ''
-                            provider: filesmatch
-                    provider: directory
 letsencrypt:
     install: '1'
     settings:
@@ -230,7 +222,7 @@ letsencrypt:
 php:
     install: '1'
     settings:
-        version: '70'
+        version: '7.0'
     modules:
         php:
             - cli
@@ -280,11 +272,8 @@ blackfire:
             agent_timeout: '0.25'
             log_file: ''
             log_level: '1'
-xhprof:
-    install: '0'
 wpcli:
     install: '0'
-    version: v0.21.1
 drush:
     install: '0'
     version: 8.0.5
@@ -300,33 +289,16 @@ nodejs:
     settings:
         version: '5'
     npm_packages: {  }
-hhvm:
-    install: '0'
-    nightly: 0
-    composer: '1'
-    composer_home: ''
-    settings: {  }
-    server_ini:
-        hhvm.server.host: 127.0.0.1
-        hhvm.server.port: '9000'
-        hhvm.log.use_log_file: '1'
-        hhvm.log.file: /var/log/hhvm/error.log
-    php_ini:
-        display_errors: 'On'
-        error_reporting: '-1'
-        date.timezone: UTC
 mariadb:
     install: '1'
     settings:
         version: '10.1'
-        root_password: 'root'
-        # Custome Configuration
+        root_password: root
         override_options: {  }
-    adminer: 0
     users:
         mariadbnu_clxqynckzr6l:
             name: crawler_devbox
-            password: 'crawler_devbox'
+            password: crawler_devbox
     databases:
         mariadbnd_9l2d116wqqqb:
             name: crawler_devbox
@@ -343,7 +315,6 @@ mysql:
         version: '5.6'
         root_password: root
         override_options: {  }
-    adminer: 0
     users:
         mysqlnu_23gjnkhqjwnh:
             name: crawler_devbox
@@ -369,14 +340,13 @@ postgresql:
     databases: {  }
     users: {  }
     grants: {  }
-    adminer: 0
 mongodb:
     install: '0'
     settings:
         bind_ip: 127.0.0.1
         port: '27017'
     globals:
-        version: 2.6.0
+        version: 3.6.2
     databases: {  }
 redis:
     install: '0'
@@ -384,7 +354,6 @@ redis:
         port: '6379'
 sqlite:
     install: '0'
-    adminer: 0
     databases: {  }
 mailhog:
     install: '0'
@@ -420,8 +389,4 @@ elastic_search:
     instances:
         esi_6nugajlelnis:
             name: es-01
-solr:
-    install: '0'
-    settings:
-        version: 4.10.2
-        port: '8984'
+
