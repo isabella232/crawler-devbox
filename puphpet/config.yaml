@@ -197,10 +197,10 @@ apache:
             ssl_protocol: ''
             ssl_cipher: ''
             directories:
-                avd_3nobwwg9tzqq:
+                php_html:
                     provider: directory
                     path: /var/www/crawler/devbox/web
-                    directoryindex: ''
+                    directoryindex: 'index.php index.html'
                     options:
                         - Indexes
                         - FollowSymlinks
@@ -209,8 +209,12 @@ apache:
                         - All
                     require:
                         - 'all granted'
+                php_php:
+                    provider: filesmatch
+                    path: \.php$
+                    sethandler: 'proxy:fcgi://127.0.0.1:9000'
 letsencrypt:
-    install: '1'
+    install: '0'
     settings:
         email: tomasnorre@gmail.com
     domains: {  }
