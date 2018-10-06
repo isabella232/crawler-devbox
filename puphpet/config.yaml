@@ -89,11 +89,6 @@ server:
     packages:
         - vim
         - htop
-        - php7.0-gd
-        - php7.0-soap
-        - php7.0-zip
-        - php7.0-xml
-        - php7.0-mbstring
 users_groups:
     install: '1'
     groups: {  }
@@ -222,11 +217,16 @@ letsencrypt:
 php:
     install: '1'
     settings:
-        version: '7.0'
+        version: '7.2'
     modules:
         php:
             - cli
             - intl
+            - gd
+            - soap
+            - zip
+            - xml
+            - mbstring
         pear: {  }
         pecl: {  }
     ini:
