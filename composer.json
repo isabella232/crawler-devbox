@@ -1,0 +1,38 @@
+{
+    "name": "aoepeople/crawler-typo3v7",
+    "type": "project",
+    "description": "Crawler extension for TYPO3v7",
+    "homepage": "https://github.com/AOEpeople/crawler",
+    "support": {
+        "issues": "https://github.com/AOEpeople/crawler/issues"
+    },
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "AOEpeople",
+            "email": "dev@aoe.com",
+            "homepage": "https://www.aoe.com/",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "typo3/cms": "^8.7",
+        "typo3/cms-introduction": "*",
+        "typo3/cms-indexed-search": "^8.7",
+        "aoepeople/crawler": "dev-master"
+    },
+    "require-dev": {
+    	"helhum/typo3-console": "^5.1"
+    },
+    "config": {
+        "vendor-dir": "vendor",
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "typo3/cms": {
+            "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "web-dir": "public"
+        }
+    }
+}
