@@ -25,7 +25,6 @@ hooks:
   post-start:
     - exec: cp build-files/AdditionalConfiguration.ddev.php public/typo3conf/AdditionalConfiguration.php
     - exec: composer install -d /var/www/html
-#    - exec-host: ddev import-db --src=build-files/db.sql.gz
     - exec: /var/www/html/bin/typo3cms install:generatepackagestates
     - exec: /var/www/html/bin/typo3cms install:extensionsetupifpossible
-#   - exec: /var/www/html/bin/typo3cms backend:createadmin --username crawler --password crawler!
+    - exec-host: ddev import-db --src=build-files/db.sql.gz
