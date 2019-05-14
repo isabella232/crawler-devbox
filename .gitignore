@@ -2,5 +2,9 @@
 .idea
 vendor
 bin
+public/typo3conf/ext/*
+
+# Folders Except
+!public/typo3conf/ext/.gitkeep
 
 # Files
