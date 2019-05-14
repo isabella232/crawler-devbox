@@ -27,7 +27,7 @@ hooks:
     - exec: composer install -d /var/www/html
     - exec: /var/www/html/bin/typo3cms install:generatepackagestates
     - exec: /var/www/html/bin/typo3cms install:extensionsetupifpossible
-    - exec-host: ddev import-db --src=build-files/db.sql
+    - exec-host: ddev import-db --src=build-files/db.sql.gz
 
 # This config.yaml was created with ddev version v1.7.1 
 # webimage: drud/ddev-webserver:v1.7.0
