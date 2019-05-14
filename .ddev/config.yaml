@@ -6,7 +6,7 @@ php_version: "7.2"
 webserver_type: nginx-fpm
 router_http_port: "80"
 router_https_port: "443"
-xdebug_enabled: true
+xdebug_enabled: false
 additional_hostnames: []
 additional_fqdns: []
 mariadb_version: "10.2"
@@ -20,8 +20,6 @@ omit_containers: ["dba"]
 # Many ddev commands can be extended to run tasks after the ddev command is executed.
 # See https://ddev.readthedocs.io/en/stable/users/extending-commands/ 
 hooks:
-#  pre-start:
-#    - exec-host: rm -rf public vendor
   post-start:
     - exec: cp build-files/AdditionalConfiguration.ddev.php public/typo3conf/AdditionalConfiguration.php
     - exec: composer install -d /var/www/html
