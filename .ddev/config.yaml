@@ -20,9 +20,12 @@ omit_containers: ["dba"]
 # Many ddev commands can be extended to run tasks after the ddev command is executed.
 # See https://ddev.readthedocs.io/en/stable/users/extending-commands/ 
 hooks:
+#  pre-start:
+#    - exec-host: rm -rf public vendor
   post-start:
+    - exec: cp build-files/AdditionalConfiguration.ddev.php public/typo3conf/AdditionalConfiguration.php
     - exec: composer install -d /var/www/html
+#    - exec-host: ddev import-db --src=build-files/db.sql.gz
     - exec: /var/www/html/bin/typo3cms install:generatepackagestates
     - exec: /var/www/html/bin/typo3cms install:extensionsetupifpossible
-    - exec-host: ddev import-db --src=build-files/db.sql.gz
-    - exec: /var/www/html/bin/typo3cms backend:createadmin --username crawler --password crawler!
+#   - exec: /var/www/html/bin/typo3cms backend:createadmin --username crawler --password crawler!
