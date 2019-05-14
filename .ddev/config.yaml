@@ -26,3 +26,4 @@ hooks:
     - exec: /var/www/html/bin/typo3cms install:generatepackagestates
     - exec: /var/www/html/bin/typo3cms install:extensionsetupifpossible
     - exec-host: ddev import-db --src=build-files/db.sql.gz
+    - exec: /var/www/html/bin/typo3cms cache:flush
