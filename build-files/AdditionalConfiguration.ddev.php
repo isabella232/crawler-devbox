@@ -12,6 +12,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['trustedHostsPattern'] = '.*';
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] = 'crawler-devbox';
 $GLOBALS['TYPO3_CONF_VARS']['BE']['loginSecurityLevel'] = 'normal';
 $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['dbname'] = 'db';
 $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['user'] = 'db';
@@ -19,5 +20,3 @@ $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['password'] = 'db';
 $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['host'] = 'db';
 $GLOBALS['TYPO3_CONF_VARS']['DB']['Connections']['Default']['port'] = '3306';
 $GLOBALS['TYPO3_CONF_VARS']['BE']['installToolPassword'] = '$P$CZqeoYBTHC0kXKny4tpTvBSzzV5wVY0'; /* joh316 */
-
-$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['ter'] = serialize(['repositoryDir' => '/var/www/html/html/fileadmin/ter/']);
