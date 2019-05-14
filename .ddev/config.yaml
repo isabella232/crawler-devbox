@@ -25,6 +25,8 @@ omit_containers: ["dba"]
 hooks:
   post-start:
     - exec: composer install -d /var/www/html
+    - exec: /var/www/html/bin/typo3cms install:generatepackagestates
+    - exec: /var/www/html/bin/typo3cms install:extensionsetupifpossible
     - exec-host: ddev import-db --src=build-files/db.sql
 
 # This config.yaml was created with ddev version v1.7.1 
