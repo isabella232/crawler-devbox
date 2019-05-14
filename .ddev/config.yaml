@@ -25,7 +25,7 @@ omit_containers: ["dba"]
 hooks:
   post-start:
     - exec: composer install -d /var/www/html
-    - exec: zcat build-files/db.sql | mysql
+    - exec-host: ddev import-db --src=build-files/db.sql
 
 # This config.yaml was created with ddev version v1.7.1 
 # webimage: drud/ddev-webserver:v1.7.0
