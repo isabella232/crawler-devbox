@@ -1,4 +1,4 @@
-APIVersion: v1.7.1
+APIVersion: v1.8.0
 name: crawler-typo3v8
 type: typo3
 docroot: public
@@ -10,20 +10,15 @@ xdebug_enabled: false
 additional_hostnames: []
 additional_fqdns: []
 mariadb_version: "10.2"
-webcache_enabled: false
 nfs_mount_enabled: false
 provider: default
-
-# Don't start the PHPMyAdmin Container
-omit_containers: ["dba"]
-
-# Many ddev commands can be extended to run tasks after the ddev command is executed.
-# See https://ddev.readthedocs.io/en/stable/users/extending-commands/ 
 hooks:
   post-start:
-    - exec: cp build-files/AdditionalConfiguration.ddev.php public/typo3conf/AdditionalConfiguration.php
-    - exec: composer install -d /var/www/html
-    - exec: /var/www/html/bin/typo3cms install:generatepackagestates
-    - exec: /var/www/html/bin/typo3cms install:extensionsetupifpossible
-    - exec-host: ddev import-db --src=build-files/db.sql.gz
-    - exec: /var/www/html/bin/typo3cms cache:flush
+  - exec: cp build-files/AdditionalConfiguration.ddev.php public/typo3conf/AdditionalConfiguration.php
+  - exec: composer install -d /var/www/html
+  - exec: /var/www/html/bin/typo3cms install:generatepackagestates
+  - exec: /var/www/html/bin/typo3cms install:extensionsetupifpossible
+  - exec-host: ddev import-db --src=build-files/db.sql.gz
+  - exec: /var/www/html/bin/typo3cms cache:flush
+
+omit_containers: [dba]
