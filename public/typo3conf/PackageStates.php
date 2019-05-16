@@ -47,6 +47,9 @@ return [
         'impexp' => [
             'packagePath' => 'typo3/sysext/impexp/',
         ],
+        'info' => [
+            'packagePath' => 'typo3/sysext/info/',
+        ],
         'recordlist' => [
             'packagePath' => 'typo3/sysext/recordlist/',
         ],

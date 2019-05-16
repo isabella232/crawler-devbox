@@ -19,6 +19,7 @@
         "typo3/cms": "^8.7",
         "typo3/cms-introduction": "*",
         "typo3/cms-indexed-search": "^8.7",
+        "typo3/cms-info": "^8.7",
         "aoepeople/crawler": "dev-master"
     },
     "require-dev": {
